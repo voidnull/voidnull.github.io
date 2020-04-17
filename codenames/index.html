@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+	<meta name='author' content="Premkumar">
+	<meta name='description' content="Games - Double Ditto">
+	<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assets/styles/common.css">
+    <title>Double Ditto</title>
+	<style>
+		#board {
+			font-family: system-ui,-apple-system,SF Pro Display,Segoe UI,sans-serif,Verdana;
+		}
+		
+		#board table {
+			width: 100%;
+			height: 100%;
+		}
+		
+		tr,td {
+			vertical-align:center;
+			text-align:center;
+			padding: 0.3rem!important;
+		}
+		
+		td {
+			width: 20%;
+		}
+		
+		.kcard {
+			vertical-align: middle;
+			text-align: center;
+			display: inline-block;
+			border-radius: 1rem!important;
+			margin: 0px;
+			height: 100%;
+			width:100%;
+		    position: relative;
+		    box-sizing: border-box;
+		    cursor: pointer;
+			background-color: #fbf2e5;
+		    font-size: 1.5rem;
+		    font-weight: 900;
+		}
+		
+		div.kcard div {
+		    /* Internet Explorer 10 */
+		     display: -ms-flexbox;
+		     -ms-flex-pack: center;
+		     -ms-flex-align: center;
+
+		     /* Firefox */
+		     display: -moz-box;
+		     -moz-box-pack: center;
+		     -moz-box-align: center;
+
+		     /* Safari, Opera, and Chrome */
+		     display: -webkit-box;
+		     -webkit-box-pack: center;
+		     -webkit-box-align: center;
+
+		     /* W3C */
+		     display: box;
+		     box-pack: center;
+		     box-align: center;
+
+		     height: 100%;
+		}
+		
+		.clicked {
+			font-weight1: 100;
+			color : #ccb7b7;
+		}
+		
+		.spymaster {
+			background-color: #76eaaa!important;
+		}
+		
+		div.unclicked:hover {
+			text-decoration: underline;
+			background-color: #abc7aa;
+		}
+		
+		div.clicked:hover {
+			text-decoration: underline;
+		}
+		
+		.red {
+			background-color: #ea7676;
+		}
+		
+		.blue {
+			background-color: #7d80f3;
+		}
+		
+		.death {
+			background-color: #000000;
+			color : #ff0000;
+		}
+		
+		.noone {
+			background-color: #9c9c9c;
+		}
+		</style>
+  </head>
+  <body>
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	  <a class="navbar-brand" href="/"><img src="/assets/images/favicon.ico" height="25px" /></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	    <ul class="navbar-nav mr-auto">
+  	      <li class="nav-item">
+  	        <a class="nav-link" href="/">Home</a>
+  	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Code Names<span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+			  <div class="form-inline">
+			  <input type="text" id="seedkey" class="form-control mr-3 text-uppercase" placeholder="Session" aria-label="Session">
+		  </div>
+	      </li>
+	    </ul>
+	  </div>
+	  
+	  
+	  <div class="form-inline">
+		  <button type="button" class="btn btn-dark mr-3 ">
+		     <h4><span class="badge badge-danger" id="redcount">0</span> - <span class="badge badge-primary" id="bluecount">0</span></h4>
+		  </button>
+		  <a  href="#" class="pr-3" id="spymasterbtn">
+			  <svg class="bi bi-eye-fill" width="25px" height="25px" viewBox="0 0 16 16" fill="#76eaaacc" xmlns="http://www.w3.org/2000/svg">
+			    <path d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+			    <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" clip-rule="evenodd"/>
+			  </svg>
+		  </a>
+		  <a href="#" data-toggle="modal" data-target="#helpsection" id="helpbtn">
+		  <svg class="bi bi-question-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="yellow" xmlns="http://www.w3.org/2000/svg">
+		    <path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zM6.57 6.033H5.25C5.22 4.147 6.68 3.5 8.006 3.5c1.397 0 2.673.73 2.673 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.355H7.117l-.007-.463c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.901 0-1.358.603-1.358 1.384zm1.251 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z" clip-rule="evenodd"/>
+		  </svg>
+	  </a>
+	  </div>
+	</nav>
+	
+	<main role="main">
+		<div class="container-fluid pt-4" id="board" style="height:calc(100vh - 4.5rem); ; align-items:center;">
+			</div>
+		</div>
+	</main>
+	
+	
+	<!-- help -->
+	<div class="modal fade" tabindex="-1" id="helpsection" role="dialog" aria-labelledby="helpsection" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">CodeNames - Rules</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		     </div>
+			<div class="card mb-3 modal-body">
+			  <div class="row no-gutters">
+			    <div class="col-md-3">
+			      <img src="/assets/images/codenames.jpg" class="card-img" alt="...">
+			    </div>
+			    <div class="col-md-8">
+			        <p class="card-text">
+			        	<ul>
+							<li> Color with highest count starts first
+							<li> <em>Spy Masters</em> use the <span class="badge badge-info">Spy/Eye</span> view to reveal the board
+							<li> <em>Spy Masters</em> give clues for their team to identify words of their color
+							<li> Clues have to be <span class="badge badge-warning">1 word + 1 number</span> denoting the no.of words that can be guessed with the clue
+							<li> If a team clicks on the opponents team word or a <span class="badge badge-secondary">grey</span> word, then their turn ends
+							<li> If a team clicks on the <span class="badge badge-dark">Death</span> word, then the game ends
+							<li> <a class="btn btn-primary" role="button" href="https://amzn.to/3bipUbF" target="_blank">Buy CodeNames @ Amazon</a>
+						</ul>
+			        </p>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="/assets/scripts/seedrandom.min.js"></script>
+	
+	<script src="/assets/scripts/common.js"></script>
+	<script src="/assets/scripts/codenames.data.js"></script>
+	<script src="/assets/scripts/codenames.js"></script>
+  </body>
+</html>
