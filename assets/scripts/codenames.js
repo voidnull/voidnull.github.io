@@ -82,8 +82,11 @@ function initGame() {
 		$('#seedkey').val(seed);
 	}
 	currentSeed = seed;
-	var prng = new Math.seedrandom(seed);
 	
+	//disable spymaster view
+	spyMaster = false;
+	var prng = new Math.seedrandom(seed);
+
 	var len = data.length;
 
 	// select NUMWORDS
@@ -146,9 +149,11 @@ function initGame() {
 		$('div.kcard[num="' + i + '"] div span').text(words[i]['word']);
 	}
 	
+	/**
 	if (spyMaster) {
 		spyMasterView();
 	}
+	**/
 }
 
 /****** Main ****/
