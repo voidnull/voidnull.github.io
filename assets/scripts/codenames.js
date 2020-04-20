@@ -43,7 +43,9 @@ function onCardClick(target) {
 	var num = parseInt(target.attr('num'));
 	
 	var count = false;
+	var fClickedNow = false;
 	if (!target.hasClass('clicked')) {
+		fClickedNow = true;
 		target.addClass('clicked');
 		target.addClass(words[num]['type']);
 		target.removeClass('unclicked');
@@ -59,7 +61,12 @@ function onCardClick(target) {
 	}
 	
 	if (spyMaster) {
-		target.addClass('spymaster');
+		if (fClickedNow) {
+			target.addClass('spymaster');
+		} else {
+			target.removeClass('clicked spymaster');
+			target.addClass('unclicked');
+		}
 	}
 }
 
