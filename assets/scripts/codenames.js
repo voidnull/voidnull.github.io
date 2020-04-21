@@ -3,7 +3,7 @@
  **/
 
 // data from codenames.data.json
-$.merge(data,data2)
+// $.merge(data,data2)
 
 var NUMWORDS=25;
 // map of index->type[red,blue,noone,death]
@@ -85,7 +85,7 @@ function initGame() {
 	var seed = $('#seedkey').val().trim();
 	if ((typeof seed == "undefined") || seed.length == 0) {
 		//set the seedkey
-		seed = Math.random().toString(36).substring(2, 6).toUpperCase();
+		seed = generateSessionKey(4);
 		$('#seedkey').val(seed);
 	}
 	currentSeed = seed;
@@ -172,7 +172,7 @@ function main() {
 	});
 	
 	$('#seedkey').on('keyup', function() {
-		var newSeed = $('#seedkey').val().trim()
+		var newSeed = normalizeSessionKey($('#seedkey').val());
 		if (newSeed.length > 0 && currentSeed != newSeed) {
 			initGame();
 		}

@@ -8,3 +8,8 @@ body {
 .accordion {
 	margin-top: 15rem;
 }
+
+.nav-icon {
+	width: 25px;
+	height: 25px;
+}
