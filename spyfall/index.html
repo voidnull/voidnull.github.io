@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+	<meta name='author' content="Premkumar">
+	<meta name='description' content="Games - Spyfall">
+	<link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assets/styles/common.css">
+    
+	<style>
+	div.accordion {
+		margin-top : 1rem;
+		margin-bottom : 2rem;
+	}
+	</style>
+	<title>Spyfall - Lockdown games</title>
+  </head>
+  <body>
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	  <a class="navbar-brand" href="/"><img class="nav-icon" src="/assets/images/favicon.ico" height="25px" /></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	    <ul class="navbar-nav mr-auto">
+    	      <li class="nav-item">
+    	        <a class="nav-link" href="/">Home</a>
+    	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Spyfall<span class="sr-only">(current)</span></a>
+	      </li>
+	    </ul>
+	  </div>
+	  
+	  <div class="form-inline">
+		  <a href="#" data-toggle="modal" data-target="#helpsection" id="helpbtn">
+		  <svg class="nav-icon bi bi-question-circle-fill" width="25px" height="25px" viewBox="0 0 16 16" fill="yellow" xmlns="http://www.w3.org/2000/svg">
+		    <path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zM6.57 6.033H5.25C5.22 4.147 6.68 3.5 8.006 3.5c1.397 0 2.673.73 2.673 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.355H7.117l-.007-.463c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.901 0-1.358.603-1.358 1.384zm1.251 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z" clip-rule="evenodd"/>
+		  </svg>
+	  </a>
+	  </div>
+	</nav>
+	
+	<main role="main">
+		<div class="jumbotron">
+			<div class="container">
+				<div id='nameform' class='collapse show'>
+					<form>
+						<div class="form-row">
+							<div class="col-md-4 mb-4">
+						      <div class="input-group">
+						        <div class="input-group-prepend">
+						          <span class="input-group-text" id="label1">User Name</span>
+						        </div>
+						        <input type="text" class="form-control" id="username" aria-describedby="label1" required>
+						        <div class="invalid-feedback"> Please choose a User Name </div>
+						      </div>
+						    </div>
+						</div>
+					
+						<div class="form-row">
+							<div class="col-md-4 mb-4">
+						      <div class="input-group">
+						        <div class="input-group-prepend">
+						          <span class="input-group-text" id="label2">Room Name</span>
+						        </div>
+						        <input type="text" class="form-control" id="roomname" aria-describedby="label2" required>
+						        <div class="invalid-feedback"> Please specify a Room </div>
+						      </div>
+						  </div>
+						</div>
+					
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+						       <button class="btn btn-warning mr-4" id='create-room-btn'>Create Room</button>
+						       <button class="btn btn-primary mr-4" id='join-room-btn'>Join Room</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<div class="container collapse show" id="gameboard">
+					
+					<div class="row">
+						<div class="col">
+							<div class="accordion" id="accordionExample">
+							  <div class="card">
+							    <div class="card-header" id="headingOne">
+							      <h2 class="mb-0">
+							        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							            <h5>Details - <span class="badge">Room: <span id="displayroom">tricky</span></span></h5>
+							        </button>
+							      </h2>
+							    </div>
+
+							    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+							      <div class="card-body">
+							        <h5>
+										<span class="badge">Location</span> : <span class="badge badge-danger" id="locname">Hospital</span>
+										<span class="badge">Role</span> : <span class="badge badge-danger" id="rolename">Doctor</span>
+									</h5>
+							      </div>
+							    </div>
+							  </div>
+						</div>
+					</div>
+				</div>
+					
+				
+				  <div class="row">
+				    <div class="col-2">
+						<h4>Players</h4>
+						<div id='players'>
+							
+						</div>
+					</div>
+				    <div class="col ml-5">
+						<h4>Locations</h4>
+						<div class="row row-cols-7" id='locations'>
+								
+						</div>
+				    </div>
+					
+				  </div>
+				</div>
+				
+				
+			</div> <!-- container -->
+		</div> <!-- jumbotron -->
+	</main>
+	
+	
+	<!-- help -->
+	<div class="modal fade" tabindex="-1" id="helpsection" role="dialog" aria-labelledby="helpsection" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    <div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Double Ditto - Rules</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		     </div>
+			<div class="card mb-3 modal-body">
+			  <div class="row no-gutters">
+			    <div class="col-md-3">
+			      <img src="/assets/images/ditto.jpg" class="card-img" alt="...">
+			    </div>
+			    <div class="col-md-8">
+			        <p class="card-text">
+			        	<ul>
+							<li> Take turns being the <em>Ditto Master</em> by reading the card out loud to the group
+							<li> Players then have 15 seconds to write down <span class="badge badge-info">2</span> answers that come to mind
+							<li> Once time is up, take turns to read the answers out loud, <em>Ditto Master</em> goes last
+							<li> Cross off each answer that matches <em>Ditto Master's</em> answer.
+							<li> Score <span class="badge badge-warning">1</span> point for 1 match (Shout <span class="badge badge-danger">Ditto</span>)
+							<li> Score <span class="badge badge-warning">3</span> points for 2 matches (Shout <span class="badge badge-danger">Double Ditto</span>)
+							<li> <a class="btn btn-primary" role="button" href="https://amzn.to/2RL9XDe" target="_blank">Buy Ditto @ Amazon</a>
+								
+						</ul>
+			        </p>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.min.js"></script>
+	<script src="/assets/scripts/common.js"></script>
+	<script src="/assets/scripts/gameio.js"></script>
+	<script src="/assets/scripts/spyfall.data.js"></script>
+	<script src="/assets/scripts/spyfall.js"></script>
+  </body>
+</html>
