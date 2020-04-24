@@ -11,6 +11,10 @@ var words = {}
 var blueCount = 8, redCount = 8;
 var spyMaster = false;
 var currentSeed = "";
+var clock = null;
+var currentColor = 'none'
+var gameOver = false;
+
 
 function createBoard() {
 	var html = '';
@@ -56,6 +60,43 @@ function onCardClick(target) {
 		} else if (words[num]['type'] == 'blue') {
 			blueCount--;
 		}
+        
+        // time display
+        if (!spyMaster) {
+            if (words[num]['type'] != currentColor) {
+                currentColor = words[num]['type']
+                if (currentColor != 'death') {
+                    clock.reset()
+                } else {
+                    clock.stop()
+                }
+            }
+            
+            if (currentColor == 'noone') {
+                clock.reset()
+            }
+            
+            // check for game END
+            if (!gameOver) {
+                var text = ''
+                if (currentColor == 'death') {
+                    text = '<span class="badge badge-dark">Death word clicked !!!</span>'
+                } else {
+                    if (redCount == 0) {
+                        text = '<span class="badge badge-danger">Red Wins !!!</span>'
+                    } else if (blueCount == 0) {
+                        text = '<span class="badge badge-primary">Blue Wins !!!</span>'
+                    }
+                }
+                if (text.length > 0) {
+                    gameOver = true;
+                    clock.stop();
+                    $('#endmusic')[0].play();
+                    showNotification('<h3><span class="badge badge-warning">Game Over</span> - ' + text + '</h3>');
+                }
+            }
+        }
+        
 		$('#redcount').text(redCount);
 		$('#bluecount').text(blueCount);
 	}
@@ -82,14 +123,14 @@ function spyMasterView() {
 }
 
 function initGame() {
-	var seed = $('#seedkey').val().trim();
+	var seed = normalizeSessionKey($('#seedkey').val());
 	if ((typeof seed == "undefined") || seed.length == 0) {
 		//set the seedkey
 		seed = generateSessionKey(4);
 		$('#seedkey').val(seed);
 	}
 	currentSeed = seed;
-	
+	console.log('seed is ' + seed);
 	//disable spymaster view
 	spyMaster = false;
 	var prng = new Math.seedrandom(seed);
@@ -108,7 +149,7 @@ function initGame() {
 		}
 	}
 	
-	console.log(indices);
+	//console.log(indices);
 	
 	// 7 - noone
 	// 8,8 red/blue
@@ -141,13 +182,17 @@ function initGame() {
 	$('#redcount').text(redCount);
 	$('#bluecount').text(blueCount);
 	
+    currentColor = 'none'
+    gameOver = false;
+    clock.reset();
+    clock.start();
 	
 	// set the types
 	for (i=0 ; i < NUMWORDS; i++) {
 		words[i] = {'word' : data[indices[i]], 'type' : types[i] }
 	}
 	
-	console.log(words);
+	//console.log(words);
 	
 	for (i=0 ; i < NUMWORDS; i++) {
 		var target = $('div.kcard[num="' + i + '"]');
@@ -163,8 +208,16 @@ function initGame() {
 	**/
 }
 
+function showNotification(html) {
+    $('#notificationtext').html(html)
+    $('#notification').modal('show')
+}
+
 /****** Main ****/
 function main() {
+    clock = new StopWatch(function(val){
+        $('#timerdisplay').html(toMMSS(val));
+    });
 	createBoard();
 	initGame();
 	$('div.kcard').on('click', function(e) {
@@ -179,5 +232,27 @@ function main() {
 	});
 	
 	$('#spymasterbtn').on('click', spyMasterView);
+    
+    
+    
+    $('#timerdisplay').click(function() {
+        if (clock.enabled()) {
+            if (clock.running()) {
+                clock.stop();
+            } else {
+                clock.reset();
+                clock.start();
+            }
+        }
+    })
+    
+    $('#timerdisplay').dblclick(function() {
+        var enabled = clock.enabled();
+        clock.stop(true);
+        clock.enabled(!enabled)
+        if (!enabled) {
+            clock.start();
+        }
+    })
 }
 $(document).ready(main);

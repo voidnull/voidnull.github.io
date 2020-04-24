@@ -107,6 +107,10 @@
 		.noone {
 			background-color: #9c9c9c;
 		}
+        
+        .timerdisplay {
+            font-weight: 700;
+        }
 		</style>
   </head>
   <body>
@@ -134,6 +138,7 @@
 	  
 	  
 	  <div class="form-inline">
+          <button type="button" class="btn btn-outline-success mr-3" id="timerdisplay">00:00</button>
 		  <button type="button" class="btn btn-dark mr-3 ">
 		     <h4><span class="badge badge-danger" id="redcount">0</span> - <span class="badge badge-primary" id="bluecount">0</span></h4>
 		  </button>
@@ -152,14 +157,30 @@
 	</nav>
 	
 	<main role="main">
-		<div class="container-fluid pt-4" id="board" style="height:calc(100vh - 4.5rem); ; align-items:center;">
-			</div>
-		</div>
+		<div class="container-fluid pt-4" id="board" style="height:calc(100vh - 4.5rem); ; align-items:center;"></div>
+        <audio id="endmusic" src="/assets/media/peaceful_win.mp3"></audio>
+        <!-- notification -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="notification">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Code Names</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p id="notificationtext"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
 	</main>
 	
 	
 	<!-- help -->
-	<div class="modal fade" tabindex="-1" id="helpsection" role="dialog" aria-labelledby="helpsection" aria-hidden="true">
+	<div class="modal fade" tabindex="-2" id="helpsection" role="dialog" aria-labelledby="helpsection" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 	    <div class="modal-content">
 			<div class="modal-header">
