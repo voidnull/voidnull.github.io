@@ -2,11 +2,26 @@
  * Common Functions
  **********************/
 
-$('body').on('keyup', function(event) {
-    if (event.key == '?') {
-        $('#helpsection').modal();
-    }
-});
+function commonInit() {
+    $('body').on('keyup', function(event) {
+        if (event.key == '?') {
+            $('#helpsection').modal();
+        }
+    });
+
+    $('#alert-box button[class=close]').click(function (e) {
+        e.preventDefault();
+        $('#alert-box').hide();
+    });
+}
+
+function showAlert(text, title) {
+    $('#alert-box-text').text(tryGetValue(text, ""));
+    $('#alert-box-title').title(tryGetValue(title, ""));
+    $('#alert-box').show();
+}
+
+$(document).ready(commonInit)
 
 // https://stackoverflow.com/questions/6122571/simple-non-secure-hash-function-for-javascript
 String.prototype.hashCode = function() {

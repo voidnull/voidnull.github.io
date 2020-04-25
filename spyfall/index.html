@@ -17,6 +17,9 @@
 		margin-top : 1rem;
 		margin-bottom : 2rem;
 	}
+    div.jumbotron {
+        padding-top : 1rem;
+    }
 	</style>
 	<title>Spyfall - Lockdown games</title>
   </head>
@@ -50,15 +53,32 @@
 	<main role="main">
 		<div class="jumbotron">
 			<div class="container">
+                <div class="alert alert-warning alert-dismissible fade" id="alert-box">
+                  <strong id="alert-box-title">Lockdown:</strong><span id="alert-box-text">...</span>
+                  <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <div id='optionsnav' class="mb-4">
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#">Create/Join Room</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Leave Room <span id="displayroom"></span></a>
+                      </li>
+                    </ul>
+                </div>
 				<div id='nameform' class='collapse show'>
 					<form>
 						<div class="form-row">
 							<div class="col-md-4 mb-4">
 						      <div class="input-group">
 						        <div class="input-group-prepend">
-						          <span class="input-group-text" id="label1">User Name</span>
+						          <span class="input-group-text text-monospace" id="label1">User Name</span>
 						        </div>
-						        <input type="text" class="form-control" id="username" aria-describedby="label1" required>
+						        <input type="text" class="form-control text-monospace" id="username" aria-describedby="label1" required>
 						        <div class="invalid-feedback"> Please choose a User Name </div>
 						      </div>
 						    </div>
@@ -68,9 +88,9 @@
 							<div class="col-md-4 mb-4">
 						      <div class="input-group">
 						        <div class="input-group-prepend">
-						          <span class="input-group-text" id="label2">Room Name</span>
+						          <span class="input-group-text text-monospace" id="label2">Room Name</span>
 						        </div>
-						        <input type="text" class="form-control" id="roomname" aria-describedby="label2" required>
+						        <input type="text" class="form-control text-monospace" id="roomname" aria-describedby="label2" required>
 						        <div class="invalid-feedback"> Please specify a Room </div>
 						      </div>
 						  </div>
@@ -93,13 +113,13 @@
 							  <div class="card">
 							    <div class="card-header" id="headingOne">
 							      <h2 class="mb-0">
-							        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-							            <h5>Details - <span class="badge">Room: <span id="displayroom">tricky</span></span></h5>
+							        <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							            <span class="badge font-weight-bolder font-size-normal">Show/Hide Details</span>
 							        </button>
 							      </h2>
 							    </div>
 
-							    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+							    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 							      <div class="card-body">
 							        <h5>
 										<span class="badge">Location</span> : <span class="badge badge-danger" id="locname">Hospital</span>
