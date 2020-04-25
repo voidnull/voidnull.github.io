@@ -241,8 +241,11 @@ var locationsAndRoles = {
 		"Maintenance Man",
 		"Student",
 		"Janitor"
-	],
-	"Amusement Park": [
+	]
+};
+
+var locationsAndRolesExtended = {
+    "Amusement Park": [
 		"Ride Operator",
 		"Parent",
 		"Food Vendor",
