@@ -1,3 +1,5 @@
+// lodash
+var lodash = _.noConflict();
 /**********************
  * Common Functions
  **********************/
@@ -13,11 +15,20 @@ function commonInit() {
         e.preventDefault();
         $('#alert-box').hide();
     });
+    
+    // hide the default alert box
+    $('#alert-box').hide();
+    
+    // replace all a.href=# with javascript:void(0);
+    $('a[href="#"]').attr('href', 'javascript:void(0);')
+    
+    // hide the buyat buttons
+    $("#buyat").parent().hide()
 }
 
-function showAlert(text, title) {
-    $('#alert-box-text').text(tryGetValue(text, ""));
-    $('#alert-box-title').title(tryGetValue(title, ""));
+function showMessage(text, title) {
+    $('#alert-box-text').html(tryGetValue(text, ""));
+    $('#alert-box-title').html(tryGetValue(title, "Note: "));
     $('#alert-box').show();
 }
 
@@ -73,6 +84,10 @@ function toMMSS(ms) {
     var min = '' + Math.floor(ms / 60)
     
     return min.padStart(2,'0') + ' : ' + sec.padStart(2,'0')
+}
+
+function randomInt(limit) {
+    return Math.floor(Math.random() * 100001 % limit);
 }
 
 /**********************

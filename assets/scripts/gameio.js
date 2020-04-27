@@ -1,12 +1,13 @@
 
 function GameIO(name) {
-	this.name = name;
-	this.room = null;
+	this._name = name;
+	this._room = null;
 	this.onPresenceFn =null;
-	this.onMessageFn = function(type,data,sender) {
-		console.log(type,data,sender)
-	}
-	this.ignoreOwnMessages = true;
+	this._onMessageFn = {
+        'default.func' : function(type ,data, sender) {
+		    console.log(type,data,sender)
+	    }}
+	this.ignoreOwnMessages = false;
 	this.pubnub = new PubNub({
 	  publishKey: "pub-c-6d28cfc6-0fb4-47fc-8ff8-b2a4dba3b012",
 	  subscribeKey: "sub-c-dbf77c2a-8352-11ea-a186-ea4c470fc0eb",
@@ -14,7 +15,11 @@ function GameIO(name) {
 	});
 	
 	this.onMessage = function(fn) {
-		this.onMessageFn = fn;
+		this.onMessageType('default.func',fn);
+	}
+    
+	this.onMessageType = function(type, fn) {
+		this._onMessageFn[type] = fn;
 	}
 	
 	this.onPresence = function(fn) {
@@ -22,12 +27,12 @@ function GameIO(name) {
 	}
 	
 	this.getRoomChannel = function () {
-		if (!this.name || !this.room) {
+		if (!this._name || !this._room) {
 			return null;
 		}
 		return 'game:' +
-				this.name.toLowerCase().trim() + 
-				'-' + this.room.toLowerCase().trim()
+				this._name.toLowerCase().trim() + 
+				'-' + this._room.toLowerCase().trim()
 	}
 	
 	this.getUserChannel = function (userid) {
@@ -48,7 +53,7 @@ function GameIO(name) {
 			  channels: [this.getRoomChannel(), this.getUserChannel()]
 			});
 		} else {
-			console.log('channel name not ready')
+			console.log('channel name not ready', this._name, this._room)
 		}
 	}
 	
@@ -57,19 +62,16 @@ function GameIO(name) {
 	}
 	
 	this.setName = function(n) {
-		this.name = n
+		this._name = n
 		this.connect();
 	}
 	
 	this.setRoom = function(room) {
-		if (room) {
-			this.connect();
-		} else {
-			this.pubnub.unsubscribe({
-			  channels: [this.getRoomChannel(), this.getUserChannel()]
-			});
+		if (!room){
+			this.disconnect()
 		}
-		this.room = room
+		this._room = room
+        this.connect();
 	}
 	
 	this.joinRoom = function (room) {
@@ -86,16 +88,23 @@ function GameIO(name) {
 		return this.publish(this.getRoomChannel(), eventtype, data)
 	}
 	
-	this.sendToUser = function(userid, eventtype, data) {
-		if (typeof userid != 'string') {
-			if (!('uuid' in userid)) return false;
-			if (typeof userid.uuid == 'function') {
-				userid = userid.uuid()
+    this.getUUID = function (player) {
+        var uuid = ''
+		if (typeof player != 'string') {
+			if (!('uuid' in player)) return false;
+			if (typeof player.uuid == 'function') {
+				uuid = player.uuid()
 			} else {
-				userid = userid.uuid
+				uuid = player.uuid
 			}
+		} else {
+		    uuid = player
 		}
-		return this.publish(this.getUserChannel(userid), eventtype, data)
+        return uuid
+    }
+    
+	this.sendToUser = function(userid, eventtype, data) {
+		return this.publish(this.getUserChannel(this.getUUID(userid)), eventtype, data)
 	}
 	
 	this.publish = function (channel, eventtype, data) {
@@ -104,11 +113,14 @@ function GameIO(name) {
 			return false;
 		}
 		
-		if (typeof eventtype == 'undefined' || typeof data == 'undefined') {
-			console.log('both eventtype and data should be given',eventtype, data)
+		if (!isDefined(eventtype) && !isDefined(data)) {
+			console.log('either of eventtype or data should be given',eventtype, data)
 			return false
 		}
-		 
+        
+        eventtype = tryGetValue(eventtype, 'msg')
+        data = tryGetValue(data, {})
+		// console.log('to publish', channel, eventtype, data, user)
 		this.pubnub.publish({
 		    channel : channel,
 		    message : {
@@ -125,17 +137,20 @@ function GameIO(name) {
 	
 	this.setupListeners = function() {
 		/* setup listeners*/
-		var gio = this;
 		this.pubnub.addListener({
-			message:function(e) {
-			  	//console.log(e);
-				if (gio.ignoreOwnMessages && e.message.sender.uuid == user.uuid()) {
+			message:(function(e) {
+			  	// console.log(e, this);
+				if (this.ignoreOwnMessages && e.message.sender.uuid == user.uuid()) {
 					console.log('ignoring own message', e);
-				} else if (gio.onMessageFn) {
+				} else if (Object.keys(this._onMessageFn).length > 0) {
 					var m = e.message;
-					gio.onMessageFn(m.content.type, m.content.data, m.sender);
+                    if (m.content.type in this._onMessageFn) {
+                        this._onMessageFn[m.content.type](m.content.data, m.sender)
+                    } else {
+					    this._onMessageFn['default.func'](m.content.type, m.content.data, m.sender);
+                    }
 				}
-			}
+			}).bind(this)
 		});
 	}
 	

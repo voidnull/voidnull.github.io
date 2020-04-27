@@ -53,20 +53,26 @@
 	<main role="main">
 		<div class="jumbotron">
 			<div class="container">
-                <div class="alert alert-warning alert-dismissible fade" id="alert-box">
-                  <strong id="alert-box-title">Lockdown:</strong><span id="alert-box-text">...</span>
+                <div class="alert alert-warning alert-dismissible collapse hide" id="alert-box">
+                  <strong id="alert-box-title">!!! : </strong><span id="alert-box-text">...</span>
                   <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 
-                <div id='optionsnav' class="mb-4">
+                <div id='gamenav' class="mb-4 border-bottom border-warning pb-2">
                     <ul class="nav nav-tabs">
                       <li class="nav-item">
-                        <a class="nav-link active" href="#">Create/Join Room</a>
+                        <a class="nav-link active" href="#" role="join" >Join Room</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Leave Room <span id="displayroom"></span></a>
+                        <a class="nav-link" href="#" role="create" >Create Room</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" role="leave" >Leave Room<span id="displayroom"></span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" role="start" >Start Game</a>
                       </li>
                     </ul>
                 </div>
@@ -98,43 +104,42 @@
 					
 						<div class="form-row">
 							<div class="col-md-4 mb-3">
-						       <button class="btn btn-warning mr-4" id='create-room-btn'>Create Room</button>
-						       <button class="btn btn-primary mr-4" id='join-room-btn'>Join Room</button>
+						       <button class="btn btn-success mr-4" id='room-btn'>Join</button>
 							</div>
 						</div>
 					</form>
 				</div>
 				
-				<div class="container collapse show" id="gameboard">
-					
+				<div class="container collapse hide" id="gameboard">
 					<div class="row">
 						<div class="col">
-							<div class="accordion" id="accordionExample">
+                            
+							<div class="accordion" id="acc-Details">
 							  <div class="card">
-							    <div class="card-header" id="headingOne">
+							    <div class="card-header" id="loc-info-header">
 							      <h2 class="mb-0">
-							        <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							        <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#loc-info" aria-expanded="true" aria-controls="collapseOne">
 							            <span class="badge font-weight-bolder font-size-normal">Show/Hide Details</span>
 							        </button>
 							      </h2>
 							    </div>
 
-							    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+							    <div id="loc-info" class="collapse hide" aria-labelledby="loc-info-header" data-parent="#acc-Details">
 							      <div class="card-body">
 							        <h5>
-										<span class="badge">Location</span> : <span class="badge badge-danger" id="locname">Hospital</span>
-										<span class="badge">Role</span> : <span class="badge badge-danger" id="rolename">Doctor</span>
+										<span class="badge">Location</span> : <span class="badge badge-danger" id="locname">Not Set</span>
+										<span class="badge">Role</span> : <span class="badge badge-danger" id="rolename">Not Set</span>
 									</h5>
 							      </div>
 							    </div>
 							  </div>
-						</div>
-					</div>
-				</div>
+                            </div>
+					    </div>
+				    </div>
 					
 				
 				  <div class="row">
-				    <div class="col-2">
+				    <div class="col-3">
 						<h4>Players</h4>
 						<div id='players'>
 							
@@ -161,7 +166,7 @@
 	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 	    <div class="modal-content">
 			<div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Double Ditto - Rules</h5>
+		        <h5 class="modal-title">Spyfall - Rules</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -169,19 +174,20 @@
 			<div class="card mb-3 modal-body">
 			  <div class="row no-gutters">
 			    <div class="col-md-3">
-			      <img src="/assets/images/ditto.jpg" class="card-img" alt="...">
+			      <img src="/assets/images/spyfall.jpg" class="card-img" alt="Spyfall">
 			    </div>
 			    <div class="col-md-8">
 			        <p class="card-text">
 			        	<ul>
-							<li> Take turns being the <em>Ditto Master</em> by reading the card out loud to the group
-							<li> Players then have 15 seconds to write down <span class="badge badge-info">2</span> answers that come to mind
-							<li> Once time is up, take turns to read the answers out loud, <em>Ditto Master</em> goes last
-							<li> Cross off each answer that matches <em>Ditto Master's</em> answer.
-							<li> Score <span class="badge badge-warning">1</span> point for 1 match (Shout <span class="badge badge-danger">Ditto</span>)
-							<li> Score <span class="badge badge-warning">3</span> points for 2 matches (Shout <span class="badge badge-danger">Double Ditto</span>)
-							<li> <a class="btn btn-primary" role="button" href="https://amzn.to/2RL9XDe" target="_blank">Buy Ditto @ Amazon</a>
-								
+							<li> The <em>Game Admin</em> creates a room with a name and asks others to join the same room
+							<li> After sufficient players <span class="badge badge-info"> &gt; 3 </span> have joined, the admin starts the game by clicking on <em>Start Game</em>
+							<li> All players are assigned the SAME location but different roles
+							<li> The <span class="badge badge-warning">SPY</span> has to identify the location
+							<li> Other players have to identify the <span class="badge badge-warning">SPY</span>
+							<li> Each one takes turn to as question without exposing themselves.
+                            <li> Spy has only <em>one</em> shot at guessing the location. The game ends here
+                            <li> Other players together have <em>one</em> shot at guessing the <span class="badge badge-warning">SPY</span>.  The game ends here
+							<li> <a class="btn btn-primary" id="buyat" role="button" href="https://amzn.to/2S9ZYr4" target="_blank">Buy Spyfall @ Amazon</a>
 						</ul>
 			        </p>
 			    </div>
@@ -196,6 +202,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 	<script src="/assets/scripts/common.js"></script>
 	<script src="/assets/scripts/gameio.js"></script>
 	<script src="/assets/scripts/spyfall.data.js"></script>
