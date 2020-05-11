@@ -351,19 +351,22 @@ function onCardClick(e) {
                 gameOver=true;
                 let text = '<span class="badge badge-primary">' + foundSets +' - sets found. No more sets</span>'
                 clock.stop();
-                $('#endmusic')[0].play();
+                playfx('end');
                 showNotification('<h3><span class="badge badge-warning">Game Over</span> - ' + text + '</h3>');
             } else {
-                $('#successmusic')[0].play();
+                playfx('success');
             }
         } else {
-             $('#failuremusic')[0].play();
+             playfx('failure');
             console.log('The selected cards are NOT a set', infos , setCheck)
         }
         
         // reset the selection
         cards.removeClass('selected')
         $('.selected-border').removeClass('selected-border')
+    } else {
+        // <=2 cards
+        playfx('zoomin');
     }
 }
 

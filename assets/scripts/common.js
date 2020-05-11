@@ -23,7 +23,7 @@ function commonInit() {
     $('a[href="#"]').attr('href', 'javascript:void(0);')
     
     // hide the buyat buttons
-    $("#buyat").parent().hide()
+    // $("#buyat").parent().hide()
 }
 
 function showMessage(text, title) {
@@ -256,3 +256,9 @@ function User() {
 }
 
 var user = new User();
+
+function playfx(name) {
+    $('#fx-' + lodash.toLower(name))[0].play();
+}
+
+$(document).ready(commonInit);
