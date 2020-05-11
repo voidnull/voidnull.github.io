@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 	<meta name='author' content="Premkumar">
-	<meta name='description' content="Games - Double Ditto">
+	<meta name='description' content="Games - Set , SetGame">
 	<link rel="shortcut icon" href="/assets/images/favicon.ico">
 
     <!-- Bootstrap CSS -->
@@ -120,7 +120,9 @@
 	  
 	  
 	  <div class="form-inline">
-          <button type="button" class="btn btn-dark mr-3" id="timerdisplay">00:00</button>
+          <button type="button" class="btn btn-dark mr-3" >
+              <h4><span class="badge badge-warning" id="timerdisplay" title="Sets on this page">00:00</span></h4>
+          </button>
 		  <button type="button" class="btn btn-dark mr-3 ">
 		     <h4><span class="badge badge-danger" id="numsets" title="Sets on this page">0</span> - <span class="badge badge-primary" id="foundsets" title="Total sets you have found">0</span></h4>
 		  </button>
@@ -136,9 +138,10 @@
 	<main role="main">
 
 			<div class="container-fluid pt-4">
-                <audio id="endmusic" src="/assets/media/peaceful_win.mp3"></audio>
-                <audio id="successmusic" src="/assets/media/success.mp3"></audio>
-                <audio id="failuremusic" src="/assets/media/failure.mp3"></audio>
+                <audio id="fx-end" src="/assets/media/peaceful_win.mp3"></audio>
+                <audio id="fx-success" src="/assets/media/success.mp3"></audio>
+                <audio id="fx-failure" src="/assets/media/failure.mp3"></audio>
+                <audio id="fx-zoomin" src="/assets/media/zoomin.wav"></audio>
         
                 <div class="alert alert-warning alert-dismissible collapse hide" id="alert-box">
                   <strong id="alert-box-title">!!! : </strong><span id="alert-box-text">...</span>
