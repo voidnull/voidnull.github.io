@@ -192,6 +192,7 @@ function SetGame() {
     this.deal()
 }
 
+// https://github.com/hildjj/set-game/blob/master/svg.pug
 function getSvg(card) {
     if (lodash.isString(card)) {
         card = new Card(card);
