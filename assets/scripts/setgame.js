@@ -286,11 +286,11 @@ function createBoard() {
 	for ( var i=0 ; i < 3 ; i++) {
         html += '<tr>'
         for ( var j=0 ; j < 4 ; j++) {
-            html += '<td><div>'
+            html += '<td><div class="card-outer"><div class="card">'
 		    html += getSvg(game.hand[i*4+j])
             html += '</div>';
-            // html += '<div class="number rounded-circle"><span class="badge badge-primary">' + (i*3+ j + 1) + '</span></div>'
-            html += '</td>';
+            html += '<div class="number"><span class="badge  badge-pill badge-light">' + (i*3+ j + 1) + '</span></div>'
+            html += '</div></td>';
         }
         html += '</tr>'
 	}
