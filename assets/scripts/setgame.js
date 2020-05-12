@@ -289,7 +289,7 @@ function createBoard() {
             html += '<td><div class="card-outer"><div class="card-inner">'
 		    html += getSvg(game.hand[i*4+j])
             html += '</div>';
-            html += '<div class="number"><span class="badge  badge-pill badge-light">' + (i*3+ j + 1) + '</span></div>'
+            html += '<div class="number"><span class="badge  badge-pill badge-light">' + (i*4+ j + 1) + '</span></div>'
             html += '</div></td>';
         }
         html += '</tr>'
