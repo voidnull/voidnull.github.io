@@ -6,7 +6,7 @@
 var clock = null;
 var gameOver = false;
 var game = null;
-var rotated = false;
+var landscape = false;
 var foundSets = 0;
 var numSets = 0;
 /**
@@ -220,7 +220,7 @@ function getSvg(card) {
     // main
     let viewBox = "0 0 235 360";
     let transform = "";
-    if (rotated) {
+    if (landscape) {
         viewBox =  "0 0 360 235";
         transform =  "translate(360, 0) rotate(90)";
     }
@@ -268,20 +268,32 @@ function getSvg(card) {
 }
 
 function rotate() {
-    rotated = !rotated;
     
-    if (rotated) {
+}
+
+function onOrientationChange(orientation) {
+    console.log(orientation)
+    landscape = (orientation == 'landscape');
+    
+    if (landscape) {
         $('svg.scard').attr('viewBox', "0 0 360 235")
         $('svg.scard g').attr('transform', "translate(360, 0) rotate(90)");
+        $('#gameboard div.brk-landscape').removeClass('hide')
+        $('#gameboard div.brk-portrait').addClass('hide')
+        $('#gameboard div.col').height('30%')
     } else {
         $('svg.scard').attr('viewBox', "0 0 235 360")
         $('svg.scard g').attr('transform', "");
+        $('#gameboard div.brk-landscape').addClass('hide')
+        $('#gameboard div.brk-portrait').removeClass('hide')
+        $('#gameboard div.col').height('22%')
     }
 }
-
+orientationTracker.addListener(onOrientationChange);
 
 function createBoard() {
 	var html = '';
+    /*
 	html = '<table><tbody>'
 	for ( var i=0 ; i < 3 ; i++) {
         html += '<tr>'
@@ -293,6 +305,23 @@ function createBoard() {
             html += '</div></td>';
         }
         html += '</tr>'
+	}
+    html += '</tbody></table>'
+    */
+    
+	html = '<div class="row">'
+	for ( var i=0 ; i < 12 ; i++) {
+        html += '<div class="col"><div class="card-outer"><div class="card-inner">'
+	    html += getSvg(game.hand[i])
+        html += '</div>';
+        html += '<div class="number"><span class="badge  badge-pill badge-light">' + (i + 1) + '</span></div>'
+        html += '</div></div>';
+        var breakType = ''
+        if (i % 3 == 2) breakType = 'brk-portrait';
+        else if (i % 4 == 3) breakType = 'brk-landscape';
+        if (breakType.length > 0) {
+            html += '<div class="w-100 ' + breakType + '"></div>'
+        }
 	}
     html += '</tbody></table>'
 	$('#gameboard').html(html);
@@ -375,8 +404,8 @@ function initGame() {
 	game = new SetGame();
     gameOver = false;
     createBoard();
-    rotate();
-    fopundSets = 0;
+    onOrientationChange(orientationTracker.get())
+    foundSets = 0;
     numSets = game.findSets().length;
     $('#foundsets').html(foundSets)
     $('#numsets').html(numSets)

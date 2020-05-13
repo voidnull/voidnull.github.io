@@ -33,3 +33,14 @@ body {
 .font-size-large {
     font-size: 200%!important;
 }
+
+.section-header {
+    -webkit-text-stroke: 2px yellow;
+    color: black !important;
+    font-size: 100px;
+    font-weight: bold;
+}
+
+.hide {
+    display:none;
+}

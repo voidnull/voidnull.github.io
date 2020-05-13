@@ -254,11 +254,45 @@ function User() {
 
     this.load();
 }
-
 var user = new User();
 
 function playfx(name) {
     $('#fx-' + lodash.toLower(name))[0].play();
 }
 
-$(document).ready(commonInit);
+function OrientationTracker() {
+    this._onchangefn = null;
+    
+    this.addListener = function(fn) {
+        this._onchangefn = fn
+    }
+    this.isPortrait = function() {
+        return window.matchMedia("(orientation: portrait)").matches;
+    }
+    
+    this.isLandscape = function() {
+        return window.matchMedia("(orientation: landscape)").matches;
+    }
+    
+    this.get = function() {
+        if (this.isPortrait()) {
+            return 'portrait'
+        } else {
+            return 'landscape'
+        }
+    }
+    
+    this._internalChange = function(portraitMatch) {
+        if (portraitMatch.matches) {
+            this._onchangefn('potrait')
+        } else {
+            this._onchangefn('landscape')
+        }
+    }
+    
+
+    // setup listeners
+    window.matchMedia("(orientation: portrait)").addListener((this._internalChange).bind(this));
+}
+
+orientationTracker = new OrientationTracker();
