@@ -275,6 +275,9 @@ function onOrientationChange(orientation) {
     console.log(orientation)
     landscape = (orientation == 'landscape');
     
+    //now hide all divs and show again
+    $('#gameboard div.col').addClass('hide')
+    
     if (landscape) {
         $('svg.scard').attr('viewBox', "0 0 360 235")
         $('svg.scard g').attr('transform', "translate(360, 0) rotate(90)");
@@ -288,8 +291,10 @@ function onOrientationChange(orientation) {
         $('#gameboard div.brk-portrait').removeClass('hide')
         $('#gameboard div.col').height('22%')
     }
+    
+    // show all divs
+    $('#gameboard div.col').removeClass('hide')
 }
-orientationTracker.addListener(onOrientationChange);
 
 function createBoard() {
 	var html = '';
@@ -425,6 +430,7 @@ function main() {
     });
     
     initGame();
+    orientationTracker.addListener(onOrientationChange);
     
     $('#gameboard').on('mouseenter', 'svg' , function(e){
         $('rect.border', e.currentTarget).addClass('hover')
