@@ -284,7 +284,7 @@ function OrientationTracker() {
     
     this._internalChange = function(portraitMatch) {
         if (portraitMatch.matches) {
-            this._onchangefn('potrait')
+            this._onchangefn('portrait')
         } else {
             this._onchangefn('landscape')
         }

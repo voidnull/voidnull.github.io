@@ -54,8 +54,12 @@
             width: 100%;
         }
         
-        #gameboard div.col {
+        #gameboard[orientation="landscape"] div.col {
             height: 33%;
+        }
+        
+        #gameboard[orientation="portrait"] div.col {
+            height: 25%;
         }
     
         svg.scard {
