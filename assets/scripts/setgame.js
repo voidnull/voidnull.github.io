@@ -334,6 +334,18 @@ function createBoard() {
 	$('#gameboard').html(html);
 }
 
+function showCards(cards) {
+    if (lodash.isString(cards)) {
+        cards = [cards]
+    }
+    
+    for (let i = 0; i< cards.length ;i++) {
+        let obj = $('svg[cardinfo="' + cards[i]+ '"]');
+        obj.addClass('reveal')
+        $('rect.border', obj).addClass('reveal')
+    }
+}
+
 function onCardClick(e) {
     if (gameOver) {
         showNotification('<h3><span class="badge badge-danger">Game Over</span></h3>');
@@ -463,6 +475,13 @@ function main() {
         if (!enabled) {
             clock.start();
         }
+    })
+    
+    $('#reveal').click(function() {
+        $('#helpsection').modal('hide');
+        $('.reveal').removeClass('reveal')
+        let sets = game.findSets();
+        showCards(sets[lodash.random(0, sets.length-1)])
     })
 }
 $(document).ready(main);

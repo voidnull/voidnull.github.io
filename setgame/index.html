@@ -141,6 +141,12 @@
           cursor: pointer;
         }
         
+        .reveal {
+            stroke-width:6;
+            stroke: #0000ff;
+            border: 2px #0000ff;
+        }
+        
         .selected-border {
             stroke-width:6;
             stroke: #45d1c3;
@@ -251,8 +257,10 @@
                             <li> Attribute: Shape <em>(Oval, Diamond, Sqiggle)</em>
                             <li> Attribute: Color <em>(Red, Green, Purple)</em>
                             <li> Attribute: Fill <em>(Empty, Stripe, Solid)</em>
-                            <li> Eg: 1 GREEN empty oval, 1 RED empty oval, 1 PURPLE empty oval is a valid set
-                            <li> Eg: 1 GREEN empty oval, 1 RED empty oval, 2 PURPLE empty oval is <b>NOT</b> a valid set
+                            <li> <span class="btn badge badge-success">Valid Set</span> : <span class="badge badge-light">1 GREEN empty oval, 1 RED empty oval, 1 PURPLE empty oval</span>
+                            <li> <span class="btn badge badge-danger">!Wrong!</span> : <span class="badge badge-light">1 GREEN empty oval, 1 RED empty oval, 2 PURPLE empty oval</span>
+                            <li> Learning mode <span class="btn badge badge-info" id='reveal'>Reveal 1 Set<span>
+                            <li> &nbsp;
                             <!--<li> Credit: SVG data from <a href="https://github.com/hildjj/set-game/blob/master/svg.pug">Joe Hildebrand's code</a> -->
                             <li> <a class="btn btn-primary" id="buyat" role="button" href="https://amzn.to/3brU77G" target="_blank">Buy Set Game @ Amazon</a>
                         </ul>
