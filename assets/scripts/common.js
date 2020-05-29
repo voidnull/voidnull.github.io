@@ -307,7 +307,6 @@ function OrientationTracker() {
             }
         }
     }
-    
 
     // setup listeners
     window.matchMedia("(orientation: portrait)").addListener((this._internalChange).bind(this));

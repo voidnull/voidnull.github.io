@@ -279,7 +279,7 @@ function onOrientationChange(orientation) {
     //now hide all divs and show again
     $('#gameboard').addClass('hide')
     $('#gameboard').attr('orientation', orientation)
-    
+    setBoardHeight();
     
     if (landscape) {
         $('svg.scard').attr('viewBox', "0 0 360 235")
