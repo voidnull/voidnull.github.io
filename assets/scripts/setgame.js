@@ -483,5 +483,7 @@ function main() {
         let sets = game.findSets();
         showCards(sets[lodash.random(0, sets.length-1)])
     })
+    fullScreenBoard = true;
+    setBoardHeight();
 }
 $(document).ready(main);

@@ -254,5 +254,7 @@ function main() {
             clock.start();
         }
     })
+    
+    fullScreenBoard = true;
 }
 $(document).ready(main);

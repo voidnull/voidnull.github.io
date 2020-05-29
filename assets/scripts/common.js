@@ -1,9 +1,19 @@
 // lodash
 var lodash = _.noConflict();
+var fullScreenBoard = false;
 /**********************
  * Common Functions
  **********************/
-
+function setBoardHeight() {
+    let main = $('body > main[role="main"]')
+    let nav = $('body > nav.navbar')
+    if (main && nav) {
+        main.css('top', nav.outerHeight() + 'px')
+        let boardHeight = $(window).innerHeight()-(nav.outerHeight()+20)
+        $('#gameboard').height(boardHeight);
+        console.log('setting board height: ' + boardHeight);
+    }
+}
 function commonInit() {
     $('body').on('keyup', function(event) {
         if (event.key == '?') {
@@ -24,6 +34,12 @@ function commonInit() {
     
     // hide the buyat buttons
     // $("#buyat").parent().hide()
+    
+    $(window).resize(function(){
+        if (fullScreenBoard) {
+            setBoardHeight();
+        }
+    });
 }
 
 function showMessage(text, title) {
@@ -283,10 +299,12 @@ function OrientationTracker() {
     }
     
     this._internalChange = function(portraitMatch) {
-        if (portraitMatch.matches) {
-            this._onchangefn('portrait')
-        } else {
-            this._onchangefn('landscape')
+        if (this._onchangefn) {
+            if (portraitMatch.matches) {
+                this._onchangefn('portrait')
+            } else {
+                this._onchangefn('landscape')
+            }
         }
     }
     
